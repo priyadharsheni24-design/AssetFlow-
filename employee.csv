@@ -1,0 +1,101 @@
+Employee ID,Username,Password,Employee Name,Email,Department,Role,Status
+OD-EMP-0001,vigneshreddy,Asset@202693,Vignesh Reddy,vigneshreddy1@gmail.com,Full Stack,Asset Manager,Active
+OD-EMP-0002,aishwaryakumar,Alpha@202733,Aishwarya Kumar,aishwaryakumar2@gmail.com,Full Stack,Asset Manager,Active
+OD-EMP-0003,sanjaydevi,Horizon@202896,Sanjay Devi,sanjaydevi3@gmail.com,Full Stack,HR,Active
+OD-EMP-0004,deepikareddy,Blue@202951,Deepika Reddy,deepikareddy4@gmail.com,Frontend,HR,Active
+OD-EMP-0005,anitham,Access@203029,Anitha M,anitham5@gmail.com,Full Stack,HR,Active
+OD-EMP-0006,mohanm,Welcome@203163,Mohan M,mohanm6@gmail.com,Backend,HR,Active
+OD-EMP-0007,poojasharma,Asset@203210,Pooja Sharma,poojasharma7@gmail.com,Frontend,HR,Active
+OD-EMP-0008,varunnair,Alpha@203327,Varun Nair,varunnair8@gmail.com,Frontend,HR,Active
+OD-EMP-0009,anithapatel,Alpha@203475,Anitha Patel,anithapatel9@gmail.com,Full Stack,HR,Active
+OD-EMP-0010,rahulnair,Welcome@203542,Rahul Nair,rahulnair10@gmail.com,Backend,HR,Active
+OD-EMP-0011,nandhinimenon,Office@202641,Nandhini Menon,nandhinimenon11@gmail.com,Frontend,Manager,Active
+OD-EMP-0012,aishwaryas,Secure@202771,Aishwarya S,aishwaryas12@gmail.com,Backend,Manager,Active
+OD-EMP-0013,priyaraj,Blue@202838,Priya Raj,priyaraj13@gmail.com,Frontend,Manager,Active
+OD-EMP-0014,rohitdas,Orion@202966,Rohit Das,rohitdas14@gmail.com,Backend,Manager,Active
+OD-EMP-0015,meenababu,Welcome@203052,Meena Babu,meenababu15@gmail.com,Full Stack,Manager,Active
+OD-EMP-0016,vigneshnair,Fusion@203181,Vignesh Nair,vigneshnair16@gmail.com,Frontend,Manager,Active
+OD-EMP-0017,ajaymenon,Orion@203231,Ajay Menon,ajaymenon17@gmail.com,Full Stack,Manager,Active
+OD-EMP-0018,vigneshmenon,Blue@203316,Vignesh Menon,vigneshmenon18@gmail.com,Backend,Manager,Active
+OD-EMP-0019,keerthiiyer,Vertex@203422,Keerthi Iyer,keerthiiyer19@gmail.com,Frontend,Manager,Active
+OD-EMP-0020,snehareddy,Horizon@203552,Sneha Reddy,snehareddy20@gmail.com,Frontend,Manager,Active
+OD-EMP-0021,vigneshsharma,Access@202611,Vignesh Sharma,vigneshsharma21@gmail.com,Backend,Manager,Active
+OD-EMP-0022,anithaprakash,Fusion@202784,Anitha Prakash,anithaprakash22@gmail.com,Backend,Manager,Active
+OD-EMP-0023,arunnair,Blue@202832,Arun Nair,arunnair23@gmail.com,Backend,Manager,Active
+OD-EMP-0024,poojababu,Nova@202923,Pooja Babu,poojababu24@gmail.com,Full Stack,Manager,Active
+OD-EMP-0025,lakshmiiyer,Nova@203018,Lakshmi Iyer,lakshmiiyer25@gmail.com,Full Stack,Manager,Active
+OD-EMP-0026,aishwaryadas,Horizon@203151,Aishwarya Das,aishwaryadas26@gmail.com,Frontend,Employee,Active
+OD-EMP-0027,varunbabu,Orion@203219,Varun Babu,varunbabu27@gmail.com,Full Stack,Employee,Active
+OD-EMP-0028,arunsharma,Nova@203314,Arun Sharma,arunsharma28@gmail.com,Frontend,Employee,Active
+OD-EMP-0029,aishwaryasharma,Alpha@203465,Aishwarya Sharma,aishwaryasharma29@gmail.com,Full Stack,Employee,Active
+OD-EMP-0030,priyasingh,Office@203580,Priya Singh,priyasingh30@gmail.com,Backend,Employee,Active
+OD-EMP-0031,aishwaryadas,Secure@202639,Aishwarya Das,aishwaryadas31@gmail.com,Backend,Employee,Active
+OD-EMP-0032,divyaiyer,Fusion@202761,Divya Iyer,divyaiyer32@gmail.com,Frontend,Employee,Active
+OD-EMP-0033,keerthiraj,Horizon@202858,Keerthi Raj,keerthiraj33@gmail.com,Full Stack,Employee,Active
+OD-EMP-0034,karthikreddy,Nova@202998,Karthik Reddy,karthikreddy34@gmail.com,Full Stack,Employee,Active
+OD-EMP-0035,rahulpatel,Alpha@203092,Rahul Patel,rahulpatel35@gmail.com,Frontend,Employee,Active
+OD-EMP-0036,divyaprakash,Vertex@203181,Divya Prakash,divyaprakash36@gmail.com,Backend,Employee,Active
+OD-EMP-0037,karthikpatel,Access@203253,Karthik Patel,karthikpatel37@gmail.com,Full Stack,Employee,Active
+OD-EMP-0038,akashpatel,Fusion@203395,Akash Patel,akashpatel38@gmail.com,Backend,Employee,Active
+OD-EMP-0039,aishwaryaiyer,Horizon@203474,Aishwarya Iyer,aishwaryaiyer39@gmail.com,Backend,Employee,Active
+OD-EMP-0040,kavinnair,Fusion@203564,Kavin Nair,kavinnair40@gmail.com,Frontend,Employee,Active
+OD-EMP-0041,lakshmipatel,Welcome@202684,Lakshmi Patel,lakshmipatel41@gmail.com,Full Stack,Employee,Active
+OD-EMP-0042,nandhinisharma,Nova@202781,Nandhini Sharma,nandhinisharma42@gmail.com,Backend,Employee,Active
+OD-EMP-0043,harishdevi,Secure@202870,Harish Devi,harishdevi43@gmail.com,Full Stack,Employee,Active
+OD-EMP-0044,aishwaryam,Office@202914,Aishwarya M,aishwaryam44@gmail.com,Full Stack,Employee,Active
+OD-EMP-0045,vigneshreddy,Fusion@203056,Vignesh Reddy,vigneshreddy45@gmail.com,Frontend,Employee,Active
+OD-EMP-0046,vigneshiyer,Nova@203185,Vignesh Iyer,vigneshiyer46@gmail.com,Backend,Employee,Active
+OD-EMP-0047,divyababu,Horizon@203251,Divya Babu,divyababu47@gmail.com,Full Stack,Employee,Active
+OD-EMP-0048,sanjaykumar,Vertex@203355,Sanjay Kumar,sanjaykumar48@gmail.com,Full Stack,Employee,Active
+OD-EMP-0049,harishdevi,Office@203472,Harish Devi,harishdevi49@gmail.com,Frontend,Employee,Active
+OD-EMP-0050,deepikapatel,Asset@203522,Deepika Patel,deepikapatel50@gmail.com,Backend,Employee,Active
+OD-EMP-0051,suryakrishnan,Asset@202627,Surya Krishnan,suryakrishnan51@gmail.com,Backend,Employee,Active
+OD-EMP-0052,priyababu,Horizon@202723,Priya Babu,priyababu52@gmail.com,Backend,Employee,Active
+OD-EMP-0053,arunpatel,Access@202847,Arun Patel,arunpatel53@gmail.com,Backend,Employee,Active
+OD-EMP-0054,rohitm,Fusion@202942,Rohit M,rohitm54@gmail.com,Backend,Employee,Active
+OD-EMP-0055,varunprakash,Nova@203080,Varun Prakash,varunprakash55@gmail.com,Frontend,Employee,Active
+OD-EMP-0056,nishakumar,Welcome@203117,Nisha Kumar,nishakumar56@gmail.com,Backend,Employee,Active
+OD-EMP-0057,nandhiniraj,Horizon@203214,Nandhini Raj,nandhiniraj57@gmail.com,Frontend,Employee,Active
+OD-EMP-0058,keerthisharma,Secure@203360,Keerthi Sharma,keerthisharma58@gmail.com,Frontend,Employee,Active
+OD-EMP-0059,kavinsingh,Welcome@203451,Kavin Singh,kavinsingh59@gmail.com,Frontend,Employee,Active
+OD-EMP-0060,aishwaryapatel,Orion@203587,Aishwarya Patel,aishwaryapatel60@gmail.com,Backend,Employee,Active
+OD-EMP-0061,lakshmiraj,Welcome@202680,Lakshmi Raj,lakshmiraj61@gmail.com,Full Stack,Employee,Active
+OD-EMP-0062,harishm,Nova@202723,Harish M,harishm62@gmail.com,Frontend,Employee,Active
+OD-EMP-0063,arunkrishnan,Welcome@202895,Arun Krishnan,arunkrishnan63@gmail.com,Backend,Employee,Active
+OD-EMP-0064,divyamenon,Access@202927,Divya Menon,divyamenon64@gmail.com,Backend,Employee,Active
+OD-EMP-0065,keerthinair,Vertex@203040,Keerthi Nair,keerthinair65@gmail.com,Backend,Employee,Active
+OD-EMP-0066,akashkumar,Fusion@203126,Akash Kumar,akashkumar66@gmail.com,Full Stack,Employee,Active
+OD-EMP-0067,keerthisingh,Alpha@203211,Keerthi Singh,keerthisingh67@gmail.com,Backend,Employee,Active
+OD-EMP-0068,kavinsingh,Welcome@203340,Kavin Singh,kavinsingh68@gmail.com,Backend,Employee,Active
+OD-EMP-0069,ajays,Vertex@203445,Ajay S,ajays69@gmail.com,Full Stack,Employee,Active
+OD-EMP-0070,nishanair,Horizon@203558,Nisha Nair,nishanair70@gmail.com,Full Stack,Employee,Active
+OD-EMP-0071,mohannair,Office@202654,Mohan Nair,mohannair71@gmail.com,Backend,Employee,Active
+OD-EMP-0072,deepikaraj,Asset@202741,Deepika Raj,deepikaraj72@gmail.com,Backend,Employee,Active
+OD-EMP-0073,ajaykumar,Orion@202833,Ajay Kumar,ajaykumar73@gmail.com,Full Stack,Employee,Active
+OD-EMP-0074,deepikasingh,Blue@202923,Deepika Singh,deepikasingh74@gmail.com,Full Stack,Employee,Active
+OD-EMP-0075,arundas,Asset@203068,Arun Das,arundas75@gmail.com,Frontend,Employee,Active
+OD-EMP-0076,harishiyer,Access@203160,Harish Iyer,harishiyer76@gmail.com,Full Stack,Employee,Active
+OD-EMP-0077,ajaysingh,Vertex@203296,Ajay Singh,ajaysingh77@gmail.com,Backend,Employee,Active
+OD-EMP-0078,divyamenon,Orion@203313,Divya Menon,divyamenon78@gmail.com,Full Stack,Employee,Active
+OD-EMP-0079,varunsingh,Alpha@203430,Varun Singh,varunsingh79@gmail.com,Full Stack,Employee,Active
+OD-EMP-0080,sanjaykumar,Fusion@203581,Sanjay Kumar,sanjaykumar80@gmail.com,Frontend,Employee,Active
+OD-EMP-0081,arunpatel,Asset@202666,Arun Patel,arunpatel81@gmail.com,Full Stack,Employee,Active
+OD-EMP-0082,kavinreddy,Blue@202727,Kavin Reddy,kavinreddy82@gmail.com,Full Stack,Employee,Active
+OD-EMP-0083,rohitmenon,Asset@202834,Rohit Menon,rohitmenon83@gmail.com,Backend,Employee,Active
+OD-EMP-0084,anitharaj,Alpha@202940,Anitha Raj,anitharaj84@gmail.com,Backend,Employee,Active
+OD-EMP-0085,kavinbabu,Alpha@203070,Kavin Babu,kavinbabu85@gmail.com,Full Stack,Employee,Active
+OD-EMP-0086,divyamenon,Orion@203151,Divya Menon,divyamenon86@gmail.com,Frontend,Employee,Active
+OD-EMP-0087,divyakrishnan,Alpha@203266,Divya Krishnan,divyakrishnan87@gmail.com,Full Stack,Employee,Active
+OD-EMP-0088,vigneshprakash,Secure@203378,Vignesh Prakash,vigneshprakash88@gmail.com,Frontend,Employee,Active
+OD-EMP-0089,vigneshkrishnan,Blue@203430,Vignesh Krishnan,vigneshkrishnan89@gmail.com,Frontend,Employee,Active
+OD-EMP-0090,rahulsharma,Blue@203572,Rahul Sharma,rahulsharma90@gmail.com,Backend,Employee,Active
+OD-EMP-0091,anitharaj,Office@202627,Anitha Raj,anitharaj91@gmail.com,Frontend,Employee,Active
+OD-EMP-0092,kavinkumar,Office@202749,Kavin Kumar,kavinkumar92@gmail.com,Frontend,Employee,Active
+OD-EMP-0093,poojanair,Vertex@202815,Pooja Nair,poojanair93@gmail.com,Frontend,Employee,Active
+OD-EMP-0094,poojaprakash,Nova@202972,Pooja Prakash,poojaprakash94@gmail.com,Full Stack,Employee,Active
+OD-EMP-0095,suryakrishnan,Secure@203064,Surya Krishnan,suryakrishnan95@gmail.com,Frontend,Employee,Active
+OD-EMP-0096,keerthiprakash,Horizon@203139,Keerthi Prakash,keerthiprakash96@gmail.com,Frontend,Employee,Active
+OD-EMP-0097,mohansharma,Alpha@203262,Mohan Sharma,mohansharma97@gmail.com,Full Stack,Employee,Active
+OD-EMP-0098,keerthiiyer,Alpha@203311,Keerthi Iyer,keerthiiyer98@gmail.com,Frontend,Employee,Active
+OD-EMP-0099,aishwaryapatel,Secure@203425,Aishwarya Patel,aishwaryapatel99@gmail.com,Frontend,Employee,Active
+OD-EMP-0100,rahulsharma,Asset@203563,Rahul Sharma,rahulsharma100@gmail.com,Backend,Employee,Active
