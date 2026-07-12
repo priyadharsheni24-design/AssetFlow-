@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AssetFlow — HR Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F9F2FB; --surface:#FFFFFF; --sidebar-bg:#122040; --sidebar-bg-2:#1A2D5C;
+    --sidebar-icon:#A3BCE0; --sidebar-icon-active:#FFFFFF; --primary:#2F76BE;
+    --primary-light:#5597D6; --primary-dark:#1A4E87; --primary-tint:#E7F0FB;
+    --ink:#1B1E2E; --muted:#6C7287; --border:#DBE4F5; --success:#218F5F;
+    --success-bg:#E4F6ED; --warning:#B8790A; --warning-bg:#FCF0D8;
+    --danger:#C43D3D; --danger-bg:#FBE8E8; --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',sans-serif; --font-mono:'JetBrains Mono',monospace;
+    --radius-lg:18px; --radius-md:12px; --radius-sm:8px;
+    --shadow-md:0 6px 20px rgba(26,36,56,0.08); --shadow-lg:0 16px 40px rgba(26,36,56,0.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .app{display:flex;min-height:100vh;}
+  .sidebar{width:76px;flex-shrink:0;background:linear-gradient(180deg,var(--sidebar-bg),var(--sidebar-bg-2));display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:6px;}
+  .sidebar .logo{width:38px;height:38px;border-radius:10px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;color:#fff;font-size:15px;margin-bottom:22px;}
+  .sb-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);color:var(--sidebar-icon);cursor:pointer;}
+  .sb-icon svg{width:20px;height:20px;}
+  .sb-icon.active{background:var(--primary-light);color:#fff;}
+  .main-wrap{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .topbar{height:68px;display:flex;align-items:center;padding:0 32px;background:var(--surface);border-bottom:1px solid var(--border);justify-content: space-between;}
+  .avatar{width:38px;height:38px;border-radius:50%;background:var(--primary);color:#fff;font-family:var(--font-display);font-weight:600;display:flex;align-items:center;justify-content:center;font-size:14px;}
+  .content{flex:1;padding:32px 40px 60px;overflow-y:auto;}
+  .page-title{font-family:var(--font-display);font-weight:700;font-size:26px;}
+  .page-sub{color:var(--muted);font-size:14.5px;margin-top:4px;}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;margin-top:20px;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 20px;}
+  .stat-card .num{font-family:var(--font-display);font-size:28px;font-weight:700;}
+  .stat-card .label{font-size:12.5px;color:var(--muted);margin-top:4px;}
+  .section-title{font-family:var(--font-display);font-weight:700;font-size:18px;margin:24px 0 14px;display:flex;align-items:center;gap:10px;}
+  .badge-count{font-size:12px;background:var(--primary);color:#fff;padding:2px 8px;border-radius:20px;}
+  .list-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;margin-bottom:24px;}
+  .list-row{display:flex;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border);transition: background .15s;}
+  .list-row:hover{background:#FDFBFF;}
+  .list-row:last-child{border-bottom:none;}
+  .lr-id{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--primary);min-width:90px;}
+  .lr-main{flex:1;min-width:0;}
+  .lr-title{font-family:var(--font-display);font-weight:600;font-size:14.5px;}
+  .lr-sub{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .lr-details{display:grid;grid-template-columns:repeat(2, 1fr);gap:6px;margin-top:8px;font-size:12px;background:#F8FAFC;padding:10px;border-radius:6px;border:1px solid var(--border);}
+  .lr-badge{font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.03em;}
+  .lr-badge.pending{color:var(--warning);background:var(--warning-bg);}
+  .lr-badge.approved{color:var(--success);background:var(--success-bg);}
+  .lr-badge.rejected{color:var(--danger);background:var(--danger-bg);}
+  .lr-action{display:flex;gap:8px;}
+  .btn{font-family:var(--font-body);font-weight:600;font-size:12px;border-radius:6px;padding:8px 14px;cursor:pointer;border:none;}
+  .btn-approve{background:var(--success);color:white;}
+  .btn-approve:hover{background:#18734C;}
+  .btn-reject{background:var(--danger);color:white;}
+  .btn-reject:hover{background:#A63232;}
+  .empty-state{padding:40px 20px;text-align:center;color:var(--muted);font-size:13.5px;}
+  #toast-container{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:200;}
+  .toast{background:#fff;border-left:4px solid var(--primary);border-radius:10px;box-shadow:var(--shadow-lg);padding:14px 18px;font-size:13.5px;min-width:260px;}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">AF</div>
+    <div class="sb-icon active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <div class="page-title" style="font-size:18px;">HR Command Center</div>
+      <div class="avatar" title="HR Admin">HR</div>
+    </header>
+
+    <main class="content">
+      <div class="page-title">Operations Console Dashboard</div>
+      <div class="page-sub">Review incoming allocation tickets, handle authorization requests, and monitor company assets.</div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="num" id="stat-pending-requests">0</div><div class="label">Pending Action Items</div></div>
+        <div class="stat-card"><div class="num" id="stat-total-approved">0</div><div class="label">Approved Shipments</div></div>
+        <div class="stat-card"><div class="num" id="stat-total-rejected">0</div><div class="label">Rejected Inquiries</div></div>
+        <div class="stat-card"><div class="num" id="stat-utilization">0%</div><div class="label">Total Stock Utilization</div></div>
+      </div>
+
+      <!-- PENDING SECTION -->
+      <div class="section-title">Pending Approval Requests <span class="badge-count" id="count-pending">0</span></div>
+      <div class="list-panel" id="pending-container"></div>
+
+      <!-- ARCHIVE HISTORIC SECTION -->
+      <div class="section-title">Processed Log History Archive</div>
+      <div class="list-panel" id="archive-container"></div>
+    </main>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+  const channel = new BroadcastChannel('asset_management_system');
+  
+  let state = { assets: [], requests: [] };
+
+  function loadState() {
+    if (localStorage.getItem('af_state')) {
+      state = JSON.parse(localStorage.getItem('af_state'));
+    } else {
+      // Fallback fallback state if HR is opened before Employee workspace
+      state = {
+        assets: [
+          { id: 'AF-0001', model: 'HP EliteBook 840', spec: 'IT Floor 2 · Excellent Condition', quantity: 8, available: 8, status: 'available' },
+          { id: 'AF-0002', model: 'Sony WH-1000XM4', spec: 'IT Floor 1 · Noise Cancelling', quantity: 10, available: 10, status: 'available' },
+          { id: 'AF-0003', model: 'Apple AirPods Pro 2', spec: 'Ops Suite · Shared Pool', quantity: 5, available: 5, status: 'available' },
+          { id: 'AF-0004', model: 'Toyota Innova Crysta', spec: 'Logistics Fleet · Executive Transit', quantity: 2, available: 2, status: 'available' }
+        ],
+        requests: []
+      };
+      saveState();
+    }
+  }
+
+  function saveState() {
+    localStorage.setItem('af_state', JSON.stringify(state));
+  }
+
+  function calculateMetrics() {
+    const pending = state.requests.filter(r => r.status === 'Pending Approval').length;
+    const approved = state.requests.filter(r => r.status === 'Approved').length;
+    const rejected = state.requests.filter(r => r.status === 'Rejected').length;
+
+    let aggregateOwned = 0;
+    let aggregateAssigned = 0;
+    state.assets.forEach(a => {
+      aggregateOwned += a.quantity;
+      aggregateAssigned += (a.quantity - a.available);
+    });
+
+    const utilizationRate = aggregateOwned > 0 ? Math.round((aggregateAssigned / aggregateOwned) * 100) : 0;
+
+    document.getElementById('stat-pending-requests').textContent = pending;
+    document.getElementById('stat-total-approved').textContent = approved;
+    document.getElementById('stat-total-rejected').textContent = rejected;
+    document.getElementById('stat-utilization').textContent = utilizationRate + '%';
+    
+    document.getElementById('count-pending').textContent = pending;
+  }
+
+  function renderRows() {
+    loadState();
+    calculateMetrics();
+    
+    const pendingWrap = document.getElementById('pending-container');
+    const archiveWrap = document.getElementById('archive-container');
+    
+    pendingWrap.innerHTML = '';
+    archiveWrap.innerHTML = '';
+
+    const pendingList = state.requests.filter(r => r.status === 'Pending Approval');
+    const processedList = state.requests.filter(r => r.status !== 'Pending Approval');
+
+    if (pendingList.length === 0) {
+      pendingWrap.innerHTML = '<div class="empty-state">No pending allocations await authorization reviews.</div>';
+    } else {
+      pendingList.forEach(req => {
+        const row = document.createElement('div');
+        row.className = 'list-row';
+        row.innerHTML = `
+          <div class="lr-id">${req.requestId}</div>
+          <div class="lr-main">
+            <div class="lr-title">Request for <strong>${req.assetName}</strong></div>
+            <div class="lr-sub">Submitted: ${req.requestedDateTime}</div>
+            <div class="lr-details">
+              <div><strong>Employee:</strong> ${req.employeeName} (${req.employeeId})</div>
+              <div><strong>Department:</strong> ${req.department}</div>
+              <div><strong>Purpose:</strong> ${req.purpose}</div>
+              <div><strong>Current Status:</strong> <span class="lr-badge pending">${req.status}</span></div>
+            </div>
+          </div>
+          <div class="lr-action">
+            <button class="btn btn-approve" onclick="process('${req.requestId}', 'Approve')">✅ Approve</button>
+            <button class="btn btn-reject" onclick="process('${req.requestId}', 'Reject')">❌ Reject</button>
+          </div>
+        `;
+        pendingWrap.appendChild(row);
+      });
+    }
+
+    if (processedList.length === 0) {
+      archiveWrap.innerHTML = '<div class="empty-state">No past entries recorded inside historic action log.</div>';
+    } else {
+      processedList.forEach(req => {
+        const badgeClass = req.status === 'Approved' ? 'approved' : 'rejected';
+        const row = document.createElement('div');
+        row.className = 'list-row';
+        row.innerHTML = `
+          <div class="lr-id">${req.requestId}</div>
+          <div class="lr-main">
+            <div class="lr-title">Request for <strong>${req.assetName}</strong></div>
+            <div class="lr-sub">Handled on: ${req.requestedDateTime}</div>
+            <div class="lr-details">
+              <div><strong>Employee:</strong> ${req.employeeName} (${req.employeeId})</div>
+              <div><strong>Department:</strong> ${req.department}</div>
+              <div><strong>Purpose:</strong> ${req.purpose}</div>
+            </div>
+          </div>
+          <div>
+            <span class="lr-badge ${badgeClass}">${req.status}</span>
+          </div>
+        `;
+        archiveWrap.appendChild(row);
+      });
+    }
+  }
+
+  function process(reqId, choice) {
+    loadState();
+    const target = state.requests.find(r => r.requestId === reqId);
+    if (!target) return;
+
+    const inventoryAsset = state.assets.find(a => a.id === target.assetId);
+
+    if (choice === 'Approve') {
+      target.status = 'Approved';
+      if (inventoryAsset && inventoryAsset.available > 0) {
+        inventoryAsset.available -= 1; 
+      }
+      saveState();
+      channel.postMessage({ type: 'REQUEST_APPROVED', id: reqId, fullState: state });
+      showToast(`Approved Request ${reqId}. Asset allocated successfully!`);
+    } else {
+      target.status = 'Rejected';
+      saveState();
+      channel.postMessage({ type: 'REQUEST_REJECTED', id: reqId, fullState: state });
+      showToast(`Rejected Request ${reqId}. Asset remains available.`);
+    }
+
+    renderRows();
+  }
+
+  function showToast(msg) {
+    const container = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    container.appendChild(t);
+    setTimeout(() => t.remove(), 4000);
+  }
+
+  channel.onmessage = (event) => {
+    if (event.data.fullState) {
+      state = event.data.fullState;
+      saveState();
+      renderRows();
+      if (event.data.type === 'NEW_REQUEST') {
+        showToast(`🔔 New item request received from ${event.data.data.employeeName}!`);
+      }
+    }
+  };
+
+  window.onload = renderRows;
+</script>
+</body>
+</html>

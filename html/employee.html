@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AssetFlow — Employee Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F9F2FB; --surface:#FFFFFF; --sidebar-bg:#2B1240; --sidebar-bg-2:#3B1A5C;
+    --sidebar-icon:#CFA3E0; --sidebar-icon-active:#FFFFFF; --primary:#8B2FBE;
+    --primary-light:#A855D6; --primary-dark:#5E1A87; --primary-tint:#F5E7FB;
+    --ink:#1F1B2E; --muted:#736C87; --border:#ECDBF5; --success:#218F5F;
+    --success-bg:#E4F6ED; --warning:#B8790A; --warning-bg:#FCF0D8;
+    --danger:#C43D3D; --danger-bg:#FBE8E8; --idle:#8A5A00; --idle-bg:#FCEFD9;
+    --font-display:'Space Grotesk',sans-serif; --font-body:'Inter',sans-serif;
+    --font-mono:'JetBrains Mono',monospace; --radius-lg:18px; --radius-md:12px;
+    --radius-sm:8px; --shadow-sm:0 1px 2px rgba(36,26,56,0.06);
+    --shadow-md:0 6px 20px rgba(36,26,56,0.08); --shadow-lg:0 16px 40px rgba(36,26,56,0.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .app{display:flex;min-height:100vh;}
+  .sidebar{width:76px;flex-shrink:0;background:linear-gradient(180deg,var(--sidebar-bg),var(--sidebar-bg-2));display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:6px;}
+  .sidebar .logo{width:38px;height:38px;border-radius:10px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;color:#fff;font-size:15px;margin-bottom:22px;}
+  .sb-icon{position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);color:var(--sidebar-icon);cursor:pointer;}
+  .sb-icon svg{width:20px;height:20px;}
+  .sb-icon.active{background:var(--primary-light);color:#fff;}
+  .main-wrap{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .topbar{height:68px;display:flex;align-items:center;justify-content:between;padding:0 32px;background:var(--surface);border-bottom:1px solid var(--border);justify-content: space-between;}
+  .avatar{width:38px;height:38px;border-radius:50%;background:var(--primary);color:#fff;font-family:var(--font-display);font-weight:600;display:flex;align-items:center;justify-content:center;font-size:14px;}
+  .content{flex:1;padding:32px 40px 60px;overflow-y:auto;}
+  .page-title{font-family:var(--font-display);font-weight:700;font-size:26px;}
+  .page-sub{color:var(--muted);font-size:14.5px;margin-top:4px;}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;margin-top:20px;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 20px;}
+  .stat-card .num{font-family:var(--font-display);font-size:28px;font-weight:700;}
+  .stat-card .label{font-size:12.5px;color:var(--muted);margin-top:4px;}
+  .asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:20px;}
+  .ticket{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;position:relative;transition:box-shadow .15s ease;}
+  .ticket:hover{box-shadow:var(--shadow-md);}
+  .ticket-top{padding:20px 20px 16px;position:relative;}
+  .ticket-id{font-family:var(--font-mono);font-size:12.5px;font-weight:600;color:var(--primary);}
+  .ticket-model{font-family:var(--font-display);font-weight:600;font-size:16px;margin-top:6px;}
+  .ticket-spec{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .stamp{position:absolute;top:16px;right:16px;font-family:var(--font-display);font-weight:700;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:6px;border:1.5px solid currentColor;}
+  .stamp.available{color:var(--success);background:var(--success-bg);}
+  .stamp.pending{color:var(--warning);background:var(--warning-bg);}
+  .stamp.booked{color:var(--primary);background:var(--primary-tint);}
+  .ticket-bottom{padding:14px 20px 18px;display:flex;gap:10px;border-top:2px dashed var(--border);}
+  .btn{font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:9px;padding:10px 16px;cursor:pointer;border:1px solid transparent;flex:1;text-align:center;}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn[disabled]{opacity:.5;cursor:not-allowed;}
+  .modal-overlay{position:fixed;inset:0;background:rgba(31,27,46,0.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:#fff;border-radius:20px;width:420px;max-width:92vw;padding:28px;box-shadow:var(--shadow-lg);}
+  .modal-head{display:flex;justify-content:between;align-items:center;margin-bottom:15px;justify-content: space-between;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px;}
+  .field input, .field textarea, .field select{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 13px;font-family:var(--font-body);font-size:14px;outline:none;}
+  .modal-footer{display:flex;gap:10px;margin-top:8px;}
+  #toast-container{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:200;}
+  .toast{background:#fff;border-left:4px solid var(--primary);border-radius:10px;box-shadow:var(--shadow-lg);padding:14px 18px;font-size:13.5px;min-width:260px;}
+  .toast.success{border-color:var(--success);}
+  .toast.warning{border-color:var(--warning);}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">AF</div>
+    <div class="sb-icon active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg></div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <div class="page-title" style="font-size:18px;">Employee Workspace</div>
+      <div class="avatar" title="Priya">P</div>
+    </header>
+
+    <main class="content">
+      <div class="page-title">Good afternoon, Priya 👋</div>
+      <div class="page-sub">Browse available organization inventory assets and make requests below.</div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="num" id="stat-avail">0</div><div class="label">Available Units</div></div>
+        <div class="stat-card"><div class="num" id="stat-pend">0</div><div class="label">Pending Approval</div></div>
+        <div class="stat-card"><div class="num" id="stat-appr">0</div><div class="label">Allocated to You</div></div>
+        <div class="stat-card"><div class="num" id="stat-total">0</div><div class="label">Total Managed Variants</div></div>
+      </div>
+
+      <div style="font-family:var(--font-display); font-weight:700; font-size:18px; margin-top:30px;">Available Organization Assets</div>
+      <div class="asset-grid" id="asset-grid"></div>
+    </main>
+  </div>
+</div>
+
+<div class="modal-overlay" id="request-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Asset Request Form</h3>
+      <span style="cursor:pointer; font-weight:bold;" onclick="closeModal()">✕</span>
+    </div>
+    <div class="field"><label>Employee ID</label><input type="text" id="emp-id" value="EMP-4920" readonly></div>
+    <div class="field"><label>Employee Name</label><input type="text" id="emp-name" value="Priya Sharma" readonly></div>
+    <div class="field">
+      <label>Department</label>
+      <select id="emp-dept">
+        <option value="Engineering">Engineering</option>
+        <option value="Operations">Operations</option>
+        <option value="Product Design">Product Design</option>
+        <option value="Marketing">Marketing</option>
+      </select>
+    </div>
+    <div class="field"><label>Purpose of Request</label><textarea id="req-purpose" rows="3" placeholder="Explain why you need this asset..."></textarea></div>
+    <div class="modal-footer">
+      <button class="btn" style="background:#eee;" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitRequest()">Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+  const channel = new BroadcastChannel('asset_management_system');
+  
+  // Base State Repository
+  let state = {
+    assets: [
+      { id: 'AF-0001', model: 'HP EliteBook 840', spec: 'IT Floor 2 · Excellent Condition', quantity: 8, available: 8, status: 'available' },
+      { id: 'AF-0002', model: 'Sony WH-1000XM4', spec: 'IT Floor 1 · Noise Cancelling', quantity: 10, available: 10, status: 'available' },
+      { id: 'AF-0003', model: 'Apple AirPods Pro 2', spec: 'Ops Suite · Shared Pool', quantity: 5, available: 5, status: 'available' },
+      { id: 'AF-0004', model: 'Toyota Innova Crysta', spec: 'Logistics Fleet · Executive Transit', quantity: 2, available: 2, status: 'available' }
+    ],
+    requests: []
+  };
+
+  // Sync state data from local storage to keep state across files
+  if (localStorage.getItem('af_state')) {
+    state = JSON.parse(localStorage.getItem('af_state'));
+  } else {
+    localStorage.setItem('af_state', JSON.stringify(state));
+  }
+
+  let selectedAssetId = null;
+
+  function saveState() {
+    localStorage.setItem('af_state', JSON.stringify(state));
+  }
+
+  function render() {
+    const grid = document.getElementById('asset-grid');
+    grid.innerHTML = '';
+    
+    let totalAvail = 0;
+    state.assets.forEach(a => totalAvail += a.available);
+    
+    const pendingCount = state.requests.filter(r => r.status === 'Pending Approval').length;
+    const approvedCount = state.requests.filter(r => r.status === 'Approved').length;
+
+    document.getElementById('stat-avail').textContent = totalAvail;
+    document.getElementById('stat-pend').textContent = pendingCount;
+    document.getElementById('stat-appr').textContent = approvedCount;
+    document.getElementById('stat-total').textContent = state.assets.length;
+
+    state.assets.forEach(asset => {
+      // Look for current booking history of this variant type
+      const activeRequests = state.requests.filter(r => r.assetId === asset.id);
+      const isPending = activeRequests.some(r => r.status === 'Pending Approval');
+      
+      let currentStatus = asset.available > 0 ? 'available' : 'booked';
+      let displayLabel = `${asset.available}/${asset.quantity} Free`;
+
+      if (asset.available === 0) {
+        displayLabel = 'Fully Allocated';
+      }
+
+      let actionButton = `<button class="btn btn-primary" onclick="openRequest('${asset.id}')">Grab It</button>`;
+      if (asset.available === 0) {
+        actionButton = `<button class="btn" disabled style="background:#ccc; color:#666;">Unavailable</button>`;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'ticket';
+      card.innerHTML = `
+        <div class="ticket-top">
+          <span class="stamp ${currentStatus}">${displayLabel}</span>
+          <div class="ticket-id">${asset.id}</div>
+          <div class="ticket-model">${asset.model}</div>
+          <div class="ticket-spec">${asset.spec}</div>
+        </div>
+        <div class="ticket-bottom">
+          ${actionButton}
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function openRequest(id) {
+    selectedAssetId = id;
+    document.getElementById('req-purpose').value = '';
+    document.getElementById('request-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('request-modal').classList.remove('open');
+  }
+
+  function submitRequest() {
+    const purpose = document.getElementById('req-purpose').value.trim();
+    if (!purpose) {
+      showToast('Please clarify your purpose for requesting this asset.', 'warning');
+      return;
+    }
+
+    const asset = state.assets.find(a => a.id === selectedAssetId);
+    
+    const newRequest = {
+      requestId: 'REQ-' + Math.floor(100000 + Math.random() * 900000),
+      employeeName: document.getElementById('emp-name').value,
+      employeeId: document.getElementById('emp-id').value,
+      department: document.getElementById('emp-dept').value,
+      assetId: asset.id,
+      assetName: asset.model,
+      requestedDateTime: new Date().toLocaleString(),
+      purpose: purpose,
+      status: 'Pending Approval'
+    };
+
+    state.requests.unshift(newRequest);
+    saveState();
+    
+    // Real-Time Synchronization Signal Broadcast
+    channel.postMessage({ type: 'NEW_REQUEST', data: newRequest, fullState: state });
+    
+    closeModal();
+    render();
+    showToast(`Request submitted successfully! Sent to HR for authorization.`, 'success');
+  }
+
+  function showToast(msg, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.textContent = msg;
+    container.appendChild(t);
+    setTimeout(() => t.remove(), 4000);
+  }
+
+  // Intercept inbound events from HR dashboard workflow
+  channel.onmessage = (event) => {
+    if (event.data.fullState) {
+      state = event.data.fullState;
+      saveState();
+      render();
+      
+      if (event.data.type === 'REQUEST_APPROVED') {
+        showToast(`🎉 Request ${event.data.id} approved! The asset is allocated to you.`, 'success');
+      } else if (event.data.type === 'REQUEST_REJECTED') {
+        showToast(`❌ Request ${event.data.id} was rejected by HR operations.`, 'warning');
+      }
+    }
+  };
+
+  // Initial Load Paint Lifecycle
+  window.onload = render;
+</script>
+</body>
+</html>
