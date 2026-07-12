@@ -106,21 +106,33 @@
   let state = { assets: [], requests: [] };
 
   function loadState() {
-    if (localStorage.getItem('af_state')) {
-      state = JSON.parse(localStorage.getItem('af_state'));
-    } else {
-      // Fallback fallback state if HR is opened before Employee workspace
-      state = {
-        assets: [
-          { id: 'AF-0001', model: 'HP EliteBook 840', spec: 'IT Floor 2 · Excellent Condition', quantity: 8, available: 8, status: 'available' },
-          { id: 'AF-0002', model: 'Sony WH-1000XM4', spec: 'IT Floor 1 · Noise Cancelling', quantity: 10, available: 10, status: 'available' },
-          { id: 'AF-0003', model: 'Apple AirPods Pro 2', spec: 'Ops Suite · Shared Pool', quantity: 5, available: 5, status: 'available' },
-          { id: 'AF-0004', model: 'Toyota Innova Crysta', spec: 'Logistics Fleet · Executive Transit', quantity: 2, available: 2, status: 'available' }
-        ],
-        requests: []
-      };
-      saveState();
+    try {
+      const saved = localStorage.getItem('af_state');
+      if (saved) {
+        state = JSON.parse(saved);
+        // Fallback safety filter if structure parsed empty
+        if (!state.assets || state.assets.length === 0) {
+          initializeDefaultAssets();
+        }
+      } else {
+        initializeDefaultAssets();
+      }
+    } catch(e) {
+      initializeDefaultAssets();
     }
+  }
+
+  function initializeDefaultAssets() {
+    state = {
+      assets: [
+        { id: 'AF-0001', model: 'HP EliteBook 840', spec: 'IT Floor 2 · Excellent Condition', quantity: 8, available: 8, status: 'available' },
+        { id: 'AF-0002', model: 'Sony WH-1000XM4', spec: 'IT Floor 1 · Noise Cancelling', quantity: 10, available: 10, status: 'available' },
+        { id: 'AF-0003', model: 'Apple AirPods Pro 2', spec: 'Ops Suite · Shared Pool', quantity: 5, available: 5, status: 'available' },
+        { id: 'AF-0004', model: 'Toyota Innova Crysta', spec: 'Logistics Fleet · Executive Transit', quantity: 2, available: 2, status: 'available' }
+      ],
+      requests: []
+    };
+    saveState();
   }
 
   function saveState() {
@@ -128,6 +140,9 @@
   }
 
   function calculateMetrics() {
+    if (!state.requests) state.requests = [];
+    if (!state.assets) state.assets = [];
+
     const pending = state.requests.filter(r => r.status === 'Pending Approval').length;
     const approved = state.requests.filter(r => r.status === 'Approved').length;
     const rejected = state.requests.filter(r => r.status === 'Rejected').length;
@@ -145,7 +160,6 @@
     document.getElementById('stat-total-approved').textContent = approved;
     document.getElementById('stat-total-rejected').textContent = rejected;
     document.getElementById('stat-utilization').textContent = utilizationRate + '%';
-    
     document.getElementById('count-pending').textContent = pending;
   }
 
@@ -251,7 +265,7 @@
   }
 
   channel.onmessage = (event) => {
-    if (event.data.fullState) {
+    if (event.data && event.data.fullState) {
       state = event.data.fullState;
       saveState();
       renderRows();

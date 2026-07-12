@@ -3,21 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AssetFlow — Portal Login</title>
+<title>AssetFlow — Portal Access</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #F9F2FB;
     --surface: #FFFFFF;
     --primary: #2F76BE;
     --primary-hover: #1A4E87;
+    --hr-accent: #122040;
+    --hr-accent-hover: #1A2D5C;
     --ink: #1B1E2E;
     --muted: #6C7287;
     --border: #DBE4F5;
     --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
-    --radius: 12px;
+    --radius: 16px;
     --shadow: 0 16px 40px rgba(26, 36, 56, 0.12);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,45 +27,60 @@
     font-family: var(--font-body);
     background: var(--bg);
     color: var(--ink);
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
     padding: 20px;
     -webkit-font-smoothing: antialiased;
   }
-  .login-card {
+  .split-container {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 40px;
     width: 100%;
-    max-width: 400px;
-    box-shadow: var(--shadow);
-  }
-  .header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-  .logo {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--primary);
-    color: #fff;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 20px;
+    max-width: 900px;
     display: flex;
-    align-items: center;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    min-height: 550px;
+  }
+  .login-side {
+    flex: 1;
+    padding: 45px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin: 0 auto 16px;
   }
-  h1 { font-family: var(--font-display); font-size: 24px; font-weight: 700; }
+  /* Left Side - Employee Styling */
+  .employee-side {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+  }
+  /* Right Side - HR Styling */
+  .hr-side {
+    background: #F8FAFC;
+  }
+  .header-block {
+    margin-bottom: 28px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .employee-side .badge { background: var(--primary); color: #fff; }
+  .hr-side .badge { background: var(--hr-accent); color: #fff; }
+  
+  h2 { font-family: var(--font-display); font-size: 24px; font-weight: 700; }
   p { color: var(--muted); font-size: 14px; margin-top: 4px; }
-  .form-group {
-    margin-bottom: 20px;
-  }
+  
+  .form-group { margin-bottom: 18px; }
   label {
     display: block;
     font-size: 13px;
@@ -79,15 +96,14 @@
     border: 1px solid var(--border);
     border-radius: 8px;
     outline: none;
+    background: #fff;
     transition: border-color 0.2s;
   }
-  input:focus {
-    border-color: var(--primary);
-  }
+  input:focus { border-color: var(--primary); }
+  
   .btn {
     width: 100%;
-    padding: 14px;
-    background: var(--primary);
+    padding: 13px;
     color: white;
     border: none;
     border-radius: 8px;
@@ -96,60 +112,77 @@
     font-size: 15px;
     cursor: pointer;
     transition: background 0.2s;
-    margin-top: 10px;
+    margin-top: 8px;
   }
-  .btn:hover {
-    background: var(--primary-hover);
-  }
-  .hint {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 20px;
-    line-height: 1.5;
+  .btn-emp { background: var(--primary); }
+  .btn-emp:hover { background: var(--primary-hover); }
+  .btn-hr { background: var(--hr-accent); }
+  .btn-hr:hover { background: var(--hr-accent-hover); }
+
+  /* Responsive layout for smaller screens */
+  @media (max-width: 768px) {
+    .split-container { flex-direction: column; }
+    .employee-side { border-right: none; border-bottom: 1px solid var(--border); }
   }
 </style>
 </head>
 <body>
 
-<div class="login-card">
-  <div class="header">
-    <div class="logo">AF</div>
-    <h1>Welcome to AssetFlow</h1>
-    <p>Sign in to access your dashboard portal</p>
+<div class="split-container">
+  
+  <!-- LEFT SIDE: EMPLOYEE LOGIN -->
+  <div class="login-side employee-side">
+    <div class="header-block">
+      <span class="badge">Workspace</span>
+      <h2>Employee Portal</h2>
+      <p>Request assets & check configuration tracks</p>
+    </div>
+    <form id="employeeForm">
+      <div class="form-group">
+        <label for="emp-user">Employee ID / Username</label>
+        <input type="text" id="emp-user" placeholder="e.g., john_doe" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="emp-pass">Password</label>
+        <input type="password" id="emp-pass" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-emp">Access Workspace</button>
+    </form>
   </div>
 
-  <form id="loginForm">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" placeholder="e.g., hr_admin or john_doe" required autocomplete="username">
+  <!-- RIGHT SIDE: HR LOGIN -->
+  <div class="login-side hr-side">
+    <div class="header-block">
+      <span class="badge">Management</span>
+      <h2>HR Command Center</h2>
+      <p>Review active logs & handle inventory tickets</p>
     </div>
-    
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
-    </div>
-
-    <button type="submit" class="btn">Sign In</button>
-  </form>
-
-  <div class="hint">
-    <strong>Tip:</strong> Use <code>hr</code> or <code>admin</code> in the username to test the HR dashboard. Any other name routes to the Employee portal.
+    <form id="hrForm">
+      <div class="form-group">
+        <label for="hr-user">Admin Username</label>
+        <input type="text" id="hr-user" placeholder="e.g., admin_ops" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="hr-pass">Security Password</label>
+        <input type="password" id="hr-pass" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-hr">Launch Operations</button>
+    </form>
   </div>
+
 </div>
 
 <script>
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
+  // Handle Employee Form Routing
+  document.getElementById('employeeForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    const username = document.getElementById('username').value.trim().toLowerCase();
-    
-    // Check username string to route the user correctly
-    if (username.includes('hr') || username.includes('admin')) {
-      window.location.href = 'hr.html';
-    } else {
-      window.location.href = 'employee.html';
-    }
+    window.location.href = 'employee.html';
+  });
+
+  // Handle HR Form Routing
+  document.getElementById('hrForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    window.location.href = 'hr.html';
   });
 </script>
 
